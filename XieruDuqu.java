@@ -1,21 +1,19 @@
 import java.io.File;
-import java.io.FileInputStream;//¶ÁÈ¡Êı¾İµÄÔ­Ê¼×Ö½ÚÁ÷
-import java.io.FileNotFoundException;//ÎÄ¼şÊ§°ÜÊ±Òı·¢µÄÒì³£
-import java.io.FileOutputStream;//FileOutputStreamÓÃÓÚÏòÒ»¸öÎÄ±¾ÎÄ¼şĞ´Êı¾İ.ÓÃÓÚĞ´ÈëÖîÈçÍ¼ÏñÊı¾İÖ®ÀàµÄÔ­Ê¼×Ö½ÚµÄÁ÷
-import java.io.IOException;//·¢ÉúI/O ´íÎóÊ±Òı·¢µÄÒì³£
+import java.io.FileInputStream;//è¯»å–æ•°æ®çš„åŸå§‹å­—èŠ‚æµ
+import java.io.FileNotFoundException;//æ–‡ä»¶å¤±è´¥æ—¶å¼•å‘çš„å¼‚å¸¸
+import java.io.FileOutputStream;//FileOutputStreamç”¨äºå‘ä¸€ä¸ªæ–‡æœ¬æ–‡ä»¶å†™æ•°æ®.ç”¨äºå†™å…¥è¯¸å¦‚å›¾åƒæ•°æ®ä¹‹ç±»çš„åŸå§‹å­—èŠ‚çš„æµ
+import java.io.IOException;//å‘ç”ŸI/O é”™è¯¯æ—¶å¼•å‘çš„å¼‚å¸¸
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
 
-/*Ö÷Òª¹¦ÄÜ:1.ÎÄ¼şµÄ¶ÁÈ¡
-          2.ÎÄ¼şµÄĞ´Èë
-          3ÎÄ¼ş²»´æÔÚÊ±´´½¨  */
+
 
 public class XieruDuqu {         
-	private ObjectInputStream ois = null;     //»ù±¾Êı¾İ¶Á³ö
-	private ObjectOutputStream oos = null;     //»ù±¾Êı¾İĞ´Èë
+	private ObjectInputStream ois = null;     //åŸºæœ¬æ•°æ®è¯»å‡º
+	private ObjectOutputStream oos = null;     //åŸºæœ¬æ•°æ®å†™å…¥
 	private List<User> lstUsers = new ArrayList<User>();
 	private String fileName = null;
 	
@@ -25,10 +23,10 @@ public class XieruDuqu {
 			this.fileName = fileName; 
 	}
 	
-	@SuppressWarnings("unchecked")  //ÆÁ±ÎÄ³Ğ©±àÒëÊ±µÄ¾¯¸æĞÅÏ¢ ÔÚÇ¿ÖÆÀàĞÍ×ª»»µÄÊ±ºò±àÒëÆ÷»á¸ø³ö¾¯¸æ ¼ÓÉÏ@SuppressWarnings("unchecked")¾Í²»»á¾¯¸æÁË
+	@SuppressWarnings("unchecked")  //å±è”½æŸäº›ç¼–è¯‘æ—¶çš„è­¦å‘Šä¿¡æ¯ åœ¨å¼ºåˆ¶ç±»å‹è½¬æ¢çš„æ—¶å€™ç¼–è¯‘å™¨ä¼šç»™å‡ºè­¦å‘Š åŠ ä¸Š@SuppressWarnings("unchecked")å°±ä¸ä¼šè­¦å‘Šäº†
 	public  List<User> getUsers(){
 		try {
-			  ois = new ObjectInputStream(new FileInputStream(fileName));		//½«ÓÃ»§ĞÅÏ¢¶ÁÈ¡
+			  ois = new ObjectInputStream(new FileInputStream(fileName));		//å°†ç”¨æˆ·ä¿¡æ¯è¯»å–
 			  lstUsers =  (ArrayList<User>)ois.readObject();
 			  ois.close();
 		   }catch(FileNotFoundException e){
@@ -40,19 +38,19 @@ public class XieruDuqu {
 		  }
 		 return lstUsers;
    }
-	                                                                               //½«ÓÃ»§ĞÅÏ¢Ğ´Èë
+	                                                                               //å°†ç”¨æˆ·ä¿¡æ¯å†™å…¥
 	public void save(User user){
 		try {
 			oos = new ObjectOutputStream(new FileOutputStream("config/telephone.dat"));
 			int i;
 			for( i = 0;i < lstUsers.size();i++){
 //				if(user.getNo().equals(lstUsers.get(i).getNo())){
-//					lstUsers.set(i, user);//ĞŞ¸Ä
+//					lstUsers.set(i, user);//ä¿®æ”¹
 //					break;
 //				}
 			}
 			if(i >= lstUsers.size()){
-			    lstUsers.add(user);//ĞÂÔö
+			    lstUsers.add(user);//æ–°å¢
 			}
 			oos.writeObject(lstUsers);
 			oos.flush();
@@ -62,30 +60,30 @@ public class XieruDuqu {
 		}
 	}
 	
-	/* ÈôtelephoneÎÄ¼ş²»´æÔÚ,Ôò³õÊ¼»¯¼ÇÂ¼ÎÄ¼ş*/
+	/* è‹¥telephoneæ–‡ä»¶ä¸å­˜åœ¨,åˆ™åˆå§‹åŒ–è®°å½•æ–‡ä»¶*/
 	private void intRecord(){
-		//´´½¨ÎÄ¼ş
+		//åˆ›å»ºæ–‡ä»¶
 		File f = new File("config/telephone.dat");
 		try {
 			f.createNewFile();
 		} catch (IOException e1) {
 			e1.printStackTrace();
 		}
-		//ĞÂ½¨Ò»Ìõ¼ÇÂ¼
+		//æ–°å»ºä¸€æ¡è®°å½•
 		User u = new User();
 		u.setNo("1");
-		u.setName("ÊäÈëÓÃ»§Ãû");
+		u.setName("è¾“å…¥ç”¨æˆ·å");
 		u.setAge(0);
 		u.setSex("M");
-		u.setPhone("ÇëÊäÈëµç»°ºÅÂë");
-		u.setImagePath("ÊäÈëÍ¼Æ¬Â·¾¶");
+		u.setPhone("è¯·è¾“å…¥ç”µè¯å·ç ");
+		u.setImagePath("è¾“å…¥å›¾ç‰‡è·¯å¾„");
 		try {
 			oos = new ObjectOutputStream(new FileOutputStream("config/telephone.dat"));
 			lstUsers.add(u);
 			oos.writeObject(lstUsers);
 			oos.close();
 
-            JOptionPane.showMessageDialog(null, "ÇëÖØÆô±¾³ÌĞò");
+            JOptionPane.showMessageDialog(null, "è¯·é‡å¯æœ¬ç¨‹åº");
             System.exit(0);
 		} catch (FileNotFoundException e1) {
 			e1.printStackTrace();
